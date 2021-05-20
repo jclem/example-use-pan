@@ -1,9 +1,4 @@
 {
-  "name": "react-typescript",
-  "version": "1.0.0",
-  "description": "React and TypeScript example starter project",
-  "keywords": ["typescript", "react", "starter"],
-  "main": "src/index.tsx",
   "dependencies": {
     "autoprefixer": "10.2.5",
     "postcss": "8.2.15",
