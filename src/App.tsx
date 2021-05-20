@@ -6,6 +6,7 @@ import {
   BufferExample,
   TrackingExample
 } from "./examples";
+import React from "react";
 
 export default function App() {
   switch (window.location.hash) {
@@ -18,7 +19,7 @@ export default function App() {
     case "#buffer":
       return <BufferExample />;
     case "#tracking":
-      return <TrackingExample />;
+      return <TrackingExample hideData={false} />;
     default:
       return <p>Choose an example.</p>;
   }
