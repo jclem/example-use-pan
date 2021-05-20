@@ -17,5 +17,7 @@
   },
   "keywords": [],
   "name": "example-use-pan",
-  "description": ""
+  "description": "",
+  "license": "MIT",
+  "private": true
 }
