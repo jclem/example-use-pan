@@ -14,5 +14,8 @@
   },
   "scripts": {
     "dev": "vite"
-  }
+  },
+  "keywords": [],
+  "name": "example-use-pan",
+  "description": ""
 }
