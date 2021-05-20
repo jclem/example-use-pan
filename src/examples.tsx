@@ -30,7 +30,7 @@ export const UsePanExample = () => {
   return (
     <div
       onMouseDown={startPan}
-      className="select-none flex justify-center items-center w-full h-64 bg-gray-800 shadow-inner border border-gray-600 text-gray-50 relative"
+      className="select-none flex justify-center items-center w-screen h-screen bg-gray-800 shadow-inner border border-gray-600 text-gray-50 relative"
     >
       <dl className="w-64 font-mono grid grid-cols-2 absolute bottom-2 left-2">
         <dt>Offset</dt>
@@ -47,7 +47,7 @@ export const UseScaleExample = () => {
   return (
     <div
       ref={ref}
-      className="select-none flex justify-center items-center w-full h-64 bg-gray-800 shadow-inner border border-gray-600 relative text-gray-50"
+      className="select-none flex justify-center items-center w-screen h-screen bg-gray-800 shadow-inner border border-gray-600 relative text-gray-50"
     >
       <dl className="w-64 font-mono grid grid-cols-2 absolute bottom-2 left-2">
         <dt>Scale</dt>
@@ -66,13 +66,12 @@ export const UsePanScaleExample = () => {
     <div
       ref={ref}
       onMouseDown={startPan}
-      className="select-none overflow-hidden w-full h-64 bg-gray-800 shadow-inner border border-gray-600 relative text-gray-50"
+      className="select-none overflow-hidden w-screen h-screen bg-gray-800 shadow-inner border border-gray-600 relative text-gray-50"
     >
       <div
-        className="w-full h-64"
+        className="w-screen h-screen"
         style={{
-          backgroundImage:
-            "url(https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/grid.svg)",
+          backgroundImage: "url(/image/grid.svg)",
           transform: `scale(${scale})`,
           backgroundPosition: `${-offset.x}px ${-offset.y}px`
         }}
@@ -105,15 +104,14 @@ export const BufferExample = () => {
 
   return (
     <div
-      className="select-none overflow-hidden w-full h-64 bg-gray-800 shadow-inner border border-gray-600 relative text-gray-50"
+      className="select-none overflow-hidden w-screen h-screen bg-gray-800 shadow-inner border border-gray-600 relative text-gray-50"
       ref={ref}
       onMouseDown={startPan}
     >
       <div
         className="absolute"
         style={{
-          backgroundImage:
-            "url(https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/grid.svg)",
+          backgroundImage: "url(/image/grid.svg)",
           transform: `scale(${scale})`,
           backgroundPosition: `${-offset.x}px ${-offset.y}px`,
           bottom: buffer.y,
@@ -181,15 +179,14 @@ export const TrackingExample = (props: { hideData: boolean }) => {
 
   return (
     <div
-      className="select-none overflow-hidden w-full h-64 bg-gray-800 shadow-inner border border-gray-600 relative text-gray-50"
+      className="select-none overflow-hidden w-screen h-screen bg-gray-800 shadow-inner border border-gray-600 relative text-gray-50"
       ref={ref}
       onMouseDown={startPan}
     >
       <div
         className="absolute"
         style={{
-          backgroundImage:
-            "url(https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/grid.svg)",
+          backgroundImage: "url(/image/grid.svg)",
           transform: `scale(${scale})`,
           backgroundPosition: `${-adjustedOffset.current.x}px ${-adjustedOffset
             .current.y}px`,
