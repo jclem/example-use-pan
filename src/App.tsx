@@ -1,26 +1,26 @@
-import "./styles.postcss";
+import './styles.postcss';
 import {
   UsePanExample,
   UseScaleExample,
   UsePanScaleExample,
   BufferExample,
   TrackingExample
-} from "./examples";
-import React from "react";
+} from './examples';
+import React from 'react';
 
 export default function App() {
   switch (window.location.hash) {
-    case "#use-pan":
+    case '#use-pan':
       return <UsePanExample />;
-    case "#use-scale":
+    case '#use-scale':
       return <UseScaleExample />;
-    case "#use-pan-scale":
+    case '#use-pan-scale':
       return <UsePanScaleExample />;
-    case "#buffer":
+    case '#buffer':
       return <BufferExample />;
-    case "#tracking":
+    case '#tracking':
       return <TrackingExample hideData={false} />;
     default:
-      return <p>Choose an example.</p>;
+      return <p>Chooshhe an example.</p>;
   }
 }
