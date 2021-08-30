@@ -21,6 +21,6 @@ export default function App() {
     case '#tracking':
       return <TrackingExample hideData={false} />;
     default:
-      return <p>Chooshhe an example.</p>;
+      return <p>Choose an example.</p>;
   }
 }
