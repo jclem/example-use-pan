@@ -1,32 +1,56 @@
-import React, {
+import {
+  ComponentProps,
+  createElement,
   PropsWithChildren,
+  ReactElement,
+  ReactNode,
   useEffect,
   useLayoutEffect,
   useRef,
   useState
-} from "react";
-import useLast from "./hooks/useLast";
-import useMousePos from "./hooks/useMousePos";
-import usePan from "./hooks/usePan";
-import useScale from "./hooks/useScale";
-import * as pointUtils from "./util/point";
+} from 'react'
+import useLast from './hooks/useLast'
+import grid from './image/grid.svg?url'
+import useMousePos from './hooks/useMousePos'
+import usePan from './hooks/usePan'
+import useScale from './hooks/useScale'
+import * as pointUtils from './util/point'
+import VideoFallback from './VideoFallback'
 
-export const ExampleWrapper = (props: PropsWithChildren<unknown>) => {
-  const [showExample, setShowExample] = useState(false);
+export function WrappedExampleWithFallback<
+  K extends keyof typeof exampleRegistry
+>(
+  props: {
+    example: K
+    props: ComponentProps<typeof exampleRegistry[K]>
+  } & ComponentProps<typeof ExampleWrapper> &
+    ComponentProps<typeof VideoFallback>
+) {
+  return (
+    <VideoFallback {...props}>
+      <ExampleWrapper>
+        {createElement(exampleRegistry[props.example], props.props)}
+      </ExampleWrapper>
+    </VideoFallback>
+  )
+}
+
+export function ExampleWrapper(props: PropsWithChildren<unknown>): ReactNode {
+  const [showExample, setShowExample] = useState(false)
 
   useEffect(() => {
-    setShowExample(true);
-  }, []);
+    setShowExample(true)
+  }, [])
 
   if (showExample) {
-    return props.children;
+    return props.children ?? null
   } else {
-    return null;
+    return null
   }
-};
+}
 
 export const UsePanExample = () => {
-  const [offset, startPan] = usePan();
+  const [offset, startPan] = usePan()
   return (
     <div
       onMouseDown={startPan}
@@ -37,12 +61,12 @@ export const UsePanExample = () => {
         <dd className="inline-block">{JSON.stringify(roundValues(offset))}</dd>
       </dl>
     </div>
-  );
-};
+  )
+}
 
 export const UseScaleExample = () => {
-  const ref = useRef<HTMLDivElement | null>(null);
-  const scale = useScale(ref);
+  const ref = useRef<HTMLDivElement | null>(null)
+  const scale = useScale(ref)
 
   return (
     <div
@@ -54,13 +78,13 @@ export const UseScaleExample = () => {
         <dd>{round(scale)}</dd>
       </dl>
     </div>
-  );
-};
+  )
+}
 
 export const UsePanScaleExample = () => {
-  const [offset, startPan] = usePan();
-  const ref = useRef<HTMLDivElement | null>(null);
-  const scale = useScale(ref);
+  const [offset, startPan] = usePan()
+  const ref = useRef<HTMLDivElement | null>(null)
+  const scale = useScale(ref)
 
   return (
     <div
@@ -71,7 +95,7 @@ export const UsePanScaleExample = () => {
       <div
         className="w-screen h-screen"
         style={{
-          backgroundImage: "url(/image/grid.svg)",
+          backgroundImage: `url(${grid})`,
           transform: `scale(${scale})`,
           backgroundPosition: `${-offset.x}px ${-offset.y}px`
         }}
@@ -84,23 +108,23 @@ export const UsePanScaleExample = () => {
         <dd>{round(scale)}</dd>
       </dl>
     </div>
-  );
-};
+  )
+}
 
 export const BufferExample = () => {
-  const [buffer, setBuffer] = useState(pointUtils.ORIGIN);
-  const [offset, startPan] = usePan();
-  const ref = useRef<HTMLDivElement | null>(null);
-  const scale = useScale(ref);
+  const [buffer, setBuffer] = useState(pointUtils.ORIGIN)
+  const [offset, startPan] = usePan()
+  const ref = useRef<HTMLDivElement | null>(null)
+  const scale = useScale(ref)
 
   useLayoutEffect(() => {
-    const height = ref.current?.clientHeight ?? 0;
-    const width = ref.current?.clientWidth ?? 0;
+    const height = ref.current?.clientHeight ?? 0
+    const width = ref.current?.clientWidth ?? 0
     setBuffer({
       x: (width - width / scale) / 2,
       y: (height - height / scale) / 2
-    });
-  }, [scale, setBuffer]);
+    })
+  }, [scale, setBuffer])
 
   return (
     <div
@@ -111,7 +135,7 @@ export const BufferExample = () => {
       <div
         className="absolute"
         style={{
-          backgroundImage: "url(/image/grid.svg)",
+          backgroundImage: `url(${grid})`,
           transform: `scale(${scale})`,
           backgroundPosition: `${-offset.x}px ${-offset.y}px`,
           bottom: buffer.y,
@@ -130,52 +154,49 @@ export const BufferExample = () => {
         <dd>{JSON.stringify(roundValues(buffer))}</dd>
       </dl>
     </div>
-  );
-};
+  )
+}
 
-export const TrackingExample = (props: { hideData: boolean }) => {
-  const [buffer, setBuffer] = useState(pointUtils.ORIGIN);
-  const ref = useRef<HTMLDivElement | null>(null);
-  const [offset, startPan] = usePan();
-  const scale = useScale(ref);
+export const TrackingExample = (props: {hideData: boolean}) => {
+  const [buffer, setBuffer] = useState(pointUtils.ORIGIN)
+  const ref = useRef<HTMLDivElement | null>(null)
+  const [offset, startPan] = usePan()
+  const scale = useScale(ref)
 
   // Track the mouse position.
-  const mousePosRef = useMousePos(ref);
+  const mousePosRef = useMousePos(ref)
 
   // Track the last known offset and scale.
-  const lastOffset = useLast(offset);
-  const lastScale = useLast(scale);
+  const lastOffset = useLast(offset)
+  const lastScale = useLast(scale)
 
-  const delta = pointUtils.diff(offset, lastOffset);
+  const delta = pointUtils.diff(offset, lastOffset)
 
   // Since scale also affects offset, we track our own "real" offset that's
   // changed by both panning and zooming.
-  const adjustedOffset = useRef(pointUtils.sum(offset, delta));
+  const adjustedOffset = useRef(pointUtils.sum(offset, delta))
 
   if (lastScale === scale) {
     adjustedOffset.current = pointUtils.sum(
       adjustedOffset.current,
       pointUtils.scale(delta, scale)
-    );
+    )
   } else {
-    const currMouse = pointUtils.scale(mousePosRef.current, lastScale);
-    const newMouse = pointUtils.scale(mousePosRef.current, scale);
-    const mouseOffset = pointUtils.diff(currMouse, newMouse);
-    adjustedOffset.current = pointUtils.sum(
-      adjustedOffset.current,
-      mouseOffset
-    );
+    const currMouse = pointUtils.scale(mousePosRef.current, lastScale)
+    const newMouse = pointUtils.scale(mousePosRef.current, scale)
+    const mouseOffset = pointUtils.diff(currMouse, newMouse)
+    adjustedOffset.current = pointUtils.sum(adjustedOffset.current, mouseOffset)
   }
 
   useLayoutEffect(() => {
-    const height = ref.current?.clientHeight ?? 0;
-    const width = ref.current?.clientWidth ?? 0;
+    const height = ref.current?.clientHeight ?? 0
+    const width = ref.current?.clientWidth ?? 0
 
     setBuffer({
       x: (width - width / scale) / 2,
       y: (height - height / scale) / 2
-    });
-  }, [scale, setBuffer]);
+    })
+  }, [scale, setBuffer])
 
   return (
     <div
@@ -186,7 +207,7 @@ export const TrackingExample = (props: { hideData: boolean }) => {
       <div
         className="absolute"
         style={{
-          backgroundImage: "url(/image/grid.svg)",
+          backgroundImage: `url(${grid})`,
           transform: `scale(${scale})`,
           backgroundPosition: `${-adjustedOffset.current.x}px ${-adjustedOffset
             .current.y}px`,
@@ -214,19 +235,27 @@ export const TrackingExample = (props: { hideData: boolean }) => {
         </dl>
       )}
     </div>
-  );
-};
+  )
+}
 
 function round(value: number) {
-  return Math.round(value * 10) / 10;
+  return Math.round(value * 10) / 10
 }
 
 function roundValues(obj: Record<string, number>) {
-  const output: Record<string, number> = {};
+  const output: Record<string, number> = {}
 
   for (const key in obj) {
-    output[key] = round(obj[key]);
+    output[key] = round(obj[key])
   }
 
-  return output;
+  return output
+}
+
+const exampleRegistry = {
+  tracking: TrackingExample,
+  usePan: UsePanExample,
+  useScale: UseScaleExample,
+  usePanScale: UsePanScaleExample,
+  buffer: BufferExample
 }
