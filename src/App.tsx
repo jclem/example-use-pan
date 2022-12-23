@@ -44,7 +44,7 @@ export default function App() {
       return (
         <WrappedExampleWithFallback
           fallbackURL="https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/buffer.mp4"
-          example="buffer"
+          example="tracking"
         />
       )
     default:
