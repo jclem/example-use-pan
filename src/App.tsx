@@ -43,7 +43,7 @@ export default function App() {
     case '#tracking':
       return (
         <WrappedExampleWithFallback
-          fallbackURL="https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/buffer.mp4"
+          fallbackURL="https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/tracking.mp4"
           example="tracking"
         />
       )
