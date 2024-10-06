@@ -1,53 +1,53 @@
-import './styles.postcss'
+import "./styles.postcss";
 import {
   UsePanExample,
   UseScaleExample,
   UsePanScaleExample,
   BufferExample,
   TrackingExample,
-  WrappedExampleWithFallback
-} from './examples'
-import React from 'react'
-import VideoFallback from './VideoFallback'
+  WrappedExampleWithFallback,
+} from "./examples";
+import React from "react";
+import VideoFallback from "./VideoFallback";
 
 export default function App() {
   switch (window.location.hash) {
-    case '#use-pan':
+    case "#use-pan":
       return (
         <WrappedExampleWithFallback
-          fallbackURL="https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/offset-only.mp4"
+          fallbackURL="https://assets.jclem.me/2020-10-16-pan-zoom-canvas-react/offset-only.mp4"
           example="usePan"
         />
-      )
-    case '#use-scale':
+      );
+    case "#use-scale":
       return (
         <WrappedExampleWithFallback
-          fallbackURL="https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/scale-only.mp4"
+          fallbackURL="https://assets.jclem.me/2020-10-16-pan-zoom-canvas-react/scale-only.mp4"
           example="useScale"
         />
-      )
-    case '#use-pan-scale':
+      );
+    case "#use-pan-scale":
       return (
         <WrappedExampleWithFallback
-          fallbackURL="https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/offset-scale.mp4"
+          fallbackURL="https://assets.jclem.me/2020-10-16-pan-zoom-canvas-react/offset-scale.mp4"
           example="usePanScale"
         />
-      )
-    case '#buffer':
+      );
+    case "#buffer":
       return (
         <WrappedExampleWithFallback
-          fallbackURL="https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/buffer.mp4"
+          fallbackURL="https://assets.jclem.me/2020-10-16-pan-zoom-canvas-react/buffer.mp4"
           example="buffer"
         />
-      )
-    case '#tracking':
+      );
+    case "#tracking":
       return (
         <WrappedExampleWithFallback
-          fallbackURL="https://jclem.nyc3.cdn.digitaloceanspaces.com/pan-zoom-canvas-react/tracking.mp4"
+          fallbackURL="https://assets.jclem.me/2020-10-16-pan-zoom-canvas-react/tracking.mp4"
           example="tracking"
         />
-      )
+      );
     default:
-      return <p>Choose an example.</p>
+      return <p>Choose an example.</p>;
   }
 }
